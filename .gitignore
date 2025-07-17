@@ -60,3 +60,4 @@ tmp/
 # AI rules
 CLAUDE.md
 .cursorrules
+tasks/
