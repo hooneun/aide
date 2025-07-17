@@ -16,7 +16,7 @@ AI 개발 환경 - AI 도구 프롬프트를 쉽게 관리하세요.
 ## 설치
 
 ```bash
-go install github.com/yourusername/aide@latest
+go install github.com/hooneun/aide@latest
 ```
 
 ## 빠른 시작
