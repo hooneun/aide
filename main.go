@@ -1,7 +1,7 @@
 package main
 
 import (
-	"aide/cmd"
+	"github.com/hooneun/aide/cmd"
 )
 
 func main() {

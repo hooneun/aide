@@ -1,4 +1,4 @@
-module aide
+module github.com/hooneun/aide
 
 go 1.24.4
 

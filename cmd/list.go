@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"sort"
 
-	"aide/internal/config"
-	"aide/internal/storage"
+	"github.com/hooneun/aide/internal/config"
+	"github.com/hooneun/aide/internal/storage"
 
 	"github.com/spf13/cobra"
 )
@@ -37,7 +37,7 @@ var listCmd = &cobra.Command{
 		// 특정 도구가 지정된 경우
 		if len(args) == 1 {
 			tool := args[0]
-			
+
 			// 지원되는 도구인지 확인
 			if err := cfg.ValidateTool(tool); err != nil {
 				return err
@@ -89,10 +89,10 @@ var listCmd = &cobra.Command{
 			}
 
 			fmt.Printf("\n%s:\n", tool)
-			
+
 			// 카테고리 정렬
 			sort.Strings(categories)
-			
+
 			for _, category := range categories {
 				fmt.Printf("  - %s\n", category)
 			}

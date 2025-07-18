@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"aide/internal/config"
-	"aide/internal/storage"
+	"github.com/hooneun/aide/internal/config"
+	"github.com/hooneun/aide/internal/storage"
 
 	"github.com/spf13/cobra"
 )

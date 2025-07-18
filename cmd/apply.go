@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"aide/internal/config"
-	"aide/internal/generators"
-	"aide/internal/storage"
+	"github.com/hooneun/aide/internal/config"
+	"github.com/hooneun/aide/internal/generators"
+	"github.com/hooneun/aide/internal/storage"
 
 	"github.com/spf13/cobra"
 )
@@ -20,7 +20,7 @@ var applyCmd = &cobra.Command{
 
 예시:
   aide apply claude review                    # Claude 리뷰 프롬프트 적용
-  aide apply cursor backend                   # Cursor 백엔드 프롬프트 적용  
+  aide apply cursor backend                   # Cursor 백엔드 프롬프트 적용
   aide apply cursor backend,frontend          # 여러 프롬프트 동시 적용`,
 	Args: cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
