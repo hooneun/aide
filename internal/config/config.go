@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"github.com/hooneun/aide/internal/storage"
 )
 
 // Config는 애플리케이션 설정을 관리하는 구조체입니다
@@ -39,6 +40,7 @@ func (c *Config) GetPromptFile(tool, category string) string {
 
 // ValidateTool은 지원되는 도구인지 확인합니다
 func (c *Config) ValidateTool(tool string) error {
+	// 기본 도구들 확인
 	supportedTools := []string{"claude", "cursor"}
 	
 	for _, supportedTool := range supportedTools {
@@ -47,7 +49,18 @@ func (c *Config) ValidateTool(tool string) error {
 		}
 	}
 	
-	return fmt.Errorf("지원되지 않는 도구입니다: %s (지원 도구: claude, cursor)", tool)
+	// 동적으로 추가된 도구 확인
+	store, err := storage.New()
+	if err != nil {
+		return fmt.Errorf("저장소 초기화 실패: %w", err)
+	}
+
+	_, err = store.GetToolConfig(tool)
+	if err == nil {
+		return nil // 동적 도구 설정이 존재함
+	}
+
+	return fmt.Errorf("지원되지 않는 도구입니다: %s (기본 도구: claude, cursor 또는 'aide add-tool'로 추가된 도구)", tool)
 }
 
 // GetCurrentDir는 현재 작업 디렉터리를 반환합니다
@@ -66,12 +79,24 @@ func (c *Config) GetTargetFile(tool string) (string, error) {
 		return "", err
 	}
 
+	// 기본 도구들 처리
 	switch tool {
 	case "claude":
 		return filepath.Join(currentDir, "CLAUDE.md"), nil
 	case "cursor":
 		return filepath.Join(currentDir, ".cursorrules"), nil
 	default:
-		return "", fmt.Errorf("지원되지 않는 도구입니다: %s", tool)
+		// 동적 도구 설정에서 파일명 가져오기
+		store, err := storage.New()
+		if err != nil {
+			return "", fmt.Errorf("저장소 초기화 실패: %w", err)
+		}
+
+		config, err := store.GetToolConfig(tool)
+		if err != nil {
+			return "", fmt.Errorf("도구 설정을 찾을 수 없습니다: %s", tool)
+		}
+
+		return filepath.Join(currentDir, config.FileName), nil
 	}
 }
